@@ -1,11 +1,11 @@
-package gui;
+package io.github.amsamu.clientechattcp.gui;
 
-import main.Main;
+import io.github.amsamu.clientechattcp.Main;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-import static main.Main.mostrarError;
+import static io.github.amsamu.clientechattcp.Main.mostrarError;
 
 public class InicioDialogo extends JDialog {
     private JPanel contentPane;

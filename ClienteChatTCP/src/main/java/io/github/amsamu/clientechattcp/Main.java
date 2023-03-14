@@ -1,7 +1,8 @@
-package main;
+package io.github.amsamu.clientechattcp;
 
-import gui.ClienteFrame;
-import gui.InicioDialogo;
+import com.formdev.flatlaf.FlatDarkLaf;
+import io.github.amsamu.clientechattcp.gui.ClienteFrame;
+import io.github.amsamu.clientechattcp.gui.InicioDialogo;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -21,7 +22,6 @@ public class Main {
     static String nombreUsuario = "";
 
     public static void main(String[] args) {
-        //pedirNombre();
         configurarGUI();
         lanzarDialogoInicio();
         if (establecerConexion()) {
@@ -32,7 +32,7 @@ public class Main {
     }
 
     static void configurarGUI(){
-
+        FlatDarkLaf.setup();
     }
 
     public static boolean establecerConexion() {
@@ -160,25 +160,9 @@ public class Main {
         System.exit(0);
     }
 
-    static void pedirNombre() {
-        boolean nombreCorrecto = false;
-        while (!nombreCorrecto) {
-            System.out.println("Pidiendo al usuario que elija un nombre");
-            //nombreUsuario = JOptionPane.showInputDialog("Introduce tu nombre: ");
-            lanzarDialogoInicio();
-            if (nombreUsuario.trim().equals("")) {
-                System.err.println("El usuario ha introducido un nombre no válido");
-                mostrarError("Elige un nombre válido", "Error");
-            } else {
-                nombreCorrecto = true;
-                System.out.println("El usuario ha elegido el nombre: " + nombreUsuario);
-            }
-        }
-    }
-
     static void lanzarDialogoInicio() {
         System.out.println("Lanzando diálogo de inicio");
-        InicioDialogo dialogo = new gui.InicioDialogo();
+        InicioDialogo dialogo = new InicioDialogo();
         dialogo.pack();
         dialogo.inicializarCampos(defaultPort);
         dialogo.setLocationRelativeTo(null);

@@ -1,4 +1,4 @@
-package gui;
+package io.github.amsamu.clientechattcp.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
+import io.github.amsamu.clientechattcp.*;
 
 public class ClienteFrame extends JFrame implements ActionListener, KeyListener {
 
@@ -43,12 +44,12 @@ public class ClienteFrame extends JFrame implements ActionListener, KeyListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botonEnviar) {
             String texto = campoMensaje.getText();
-            main.Main.enviar("M:" + nombre + ">" + texto);
+            Main.enviar("M:" + nombre + ">" + texto);
             campoMensaje.setText("");
         }
         if (e.getSource() == botonSalir) {
             System.out.println("El usuario ha pulsado \"Salir\"");
-            main.Main.enviar("E:");
+            Main.enviar("E:");
             System.out.println("Cerrando la aplicación");
             System.exit(0);
         }
