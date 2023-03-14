@@ -2,14 +2,12 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-public class ClienteFrame extends JFrame implements ActionListener {
+public class ClienteFrame extends JFrame implements ActionListener, KeyListener {
 
     String nombre;
     JTextField campoMensaje = new JTextField();
@@ -37,7 +35,8 @@ public class ClienteFrame extends JFrame implements ActionListener {
         this.add(botonSalir);
         textarea.setBounds(0, 0, 400, 300);
         textarea.setEditable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// call onCancel() on ESCAPE
+        campoMensaje.addKeyListener(this);
     }
 
     @Override
@@ -53,6 +52,23 @@ public class ClienteFrame extends JFrame implements ActionListener {
             System.out.println("Cerrando la aplicación");
             System.exit(0);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            botonEnviar.doClick();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 
     public void anadirTexto(String texto) {

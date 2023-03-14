@@ -1,6 +1,7 @@
 package main;
 
 import gui.ClienteFrame;
+import gui.InicioDialogo;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -13,18 +14,25 @@ public class Main {
     static Socket conexion;
     static ClienteFrame frame;
     static String servidor = "localhost";
-    static int puerto = 4444;
+    public static int defaultPort = 4444;
+    static int puerto = defaultPort;
 
     static DataOutputStream sender;
     static String nombreUsuario = "";
 
     public static void main(String[] args) {
-        pedirNombre();
+        //pedirNombre();
+        configurarGUI();
+        lanzarDialogoInicio();
         if (establecerConexion()) {
             if (inicializarSender()) {
                 escuchar();
             }
         }
+    }
+
+    static void configurarGUI(){
+
     }
 
     public static boolean establecerConexion() {
@@ -54,7 +62,7 @@ public class Main {
         return correcto;
     }
 
-    public static void iniciarGUI() {
+    public static void iniciarClienteFrame() {
         frame = new ClienteFrame(nombreUsuario);
         frame.setVisible(true);
         System.out.println("GUI iniciada");
@@ -102,7 +110,7 @@ public class Main {
     }
 
     private static void tratarUnido(String historialChat) {
-        iniciarGUI();
+        iniciarClienteFrame();
         if (!historialChat.trim().isEmpty()) {
             System.out.println("Cargando historial de mensajes");
             String[] mensajes = historialChat.split("\n");
@@ -156,7 +164,8 @@ public class Main {
         boolean nombreCorrecto = false;
         while (!nombreCorrecto) {
             System.out.println("Pidiendo al usuario que elija un nombre");
-            nombreUsuario = JOptionPane.showInputDialog("Introduce tu nombre: ");
+            //nombreUsuario = JOptionPane.showInputDialog("Introduce tu nombre: ");
+            lanzarDialogoInicio();
             if (nombreUsuario.trim().equals("")) {
                 System.err.println("El usuario ha introducido un nombre no válido");
                 mostrarError("Elige un nombre válido", "Error");
@@ -165,6 +174,21 @@ public class Main {
                 System.out.println("El usuario ha elegido el nombre: " + nombreUsuario);
             }
         }
+    }
+
+    static void lanzarDialogoInicio() {
+        System.out.println("Lanzando diálogo de inicio");
+        InicioDialogo dialogo = new gui.InicioDialogo();
+        dialogo.pack();
+        dialogo.inicializarCampos(defaultPort);
+        dialogo.setLocationRelativeTo(null);
+        dialogo.setVisible(true);
+    }
+
+    public static void setServidorYUsuario(String direccionServidor, int puertoServidor, String nombreUsuario) {
+        servidor = direccionServidor;
+        puerto = puertoServidor;
+        Main.nombreUsuario = nombreUsuario;
     }
 
     public static void mostrarError(String mensaje, String titulo) {
